@@ -1,0 +1,674 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>SDT_HoracioGaldamez</title>
+
+      <!-- Bootstrap -->
+      <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+
+      <link href="css/styles.css" rel="stylesheet"/>
+
+      <script type="text/javascript" src="./js/moment.js"></script>
+      <script type="text/javascript" src="./js/moment.min.js"></script>
+
+    </head>
+  <body>
+
+<div class="container" id="CountdownPlugin">
+</br></br></br>
+  <div class="jumbotron">
+    <h1>Countdown Plugin<h1>
+      <h2>Please Enter a date in the future!</h2>
+      <p>This <em>Countdown Timer</em> will keep track of how many
+      months, days, hours, minutes, seconds, and milliseconds remain for that special day!</p>
+  </div>
+
+
+    <div class="row">
+      <!---------------------- ---
+      <div class="col-md-4"></div>
+      <!----------------------------->
+      <div class="col-md-6 timer-background">
+        <label class="control-label" for="monthChoice">Month (1-12):</label>
+        <select class="form-control" id="monthChoice">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+          <option>11</option>
+          <option>12</option>
+        </select>
+
+        <label class="control-label" for="dayChoice">Day(1-31):</label>
+        <input class="form-control" type="number" id="dayChoice" min=1 max=31></input>
+
+        <label class="control-label" for="hoursChoice">Hour(1-24):</label>
+        <input class="form-control" type="number" id="hoursChoice" min=1 max=24></input>
+
+        <label class="control-label" for="minutesChoice">Minutes(1-60):</label>
+        <input class="form-control" type="number" id="minutesChoice" min=1 max=60></input>
+
+<!---------------------------------------------------------------------------------------------------
+        <label class="control-label" for="secondsChoice">Seconds:</label>
+        <input class="form-control" type="number" id="secondsChoice" min=1 max=60></input>
+
+        <label class="control-label" for="miliChoice">MiliSeconds:</label>
+        <input class="form-control" type="number" id="miliChoice" min=1 max=1000></input>
+<!----------------------------------------------------------------------------------------------------->
+      </br></br>
+        <button id="start" class="btn btn-primary btn-lg">Start Timer</button>
+      </div>
+
+      <div id="block1" class="col-md-2 timer-component"></div>
+      <div id="block2" class="col-md-2 timer-component"></div>
+      <div id="block3" class="col-md-2 timer-component"></div>
+      </div>
+
+    </div>
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+
+
+
+    $("#start").click(function(){
+
+
+      var monthIsValid=true;
+      var dayIsValid=true;
+      var hourIsValid=true;
+      var minuteIsValid=true;
+      //var secondIsValid=true;
+      //var miliIsValid=true;
+
+      var numbers = /^[0-9]+$/;
+
+      ////////////////////////////Months Validation//////////////
+      if(document.getElementById("monthChoice").value.match(numbers))
+      {
+        monthIsValid=true;
+      }
+      else
+      {
+        monthIsValid=false;
+      }
+      ///////////////////////////////Day Validation////////////////////////
+      if(document.getElementById("dayChoice").value.match(numbers))
+      {
+        dayIsValid=true;
+      }
+      else
+      {
+        dayIsValid=false;
+      }
+
+      //////////////////////////////Hour Validation/////////////////////////
+      if(document.getElementById("hoursChoice").value.match(numbers))
+      {
+        hourIsValid=true;
+      }
+      else
+      {
+        hourIsValid=false;
+      }
+      ////////////////////////////////Minute Validation//////////////////////
+      if(document.getElementById("minutesChoice").value.match(numbers))
+      {
+        minuteIsValid=true;
+      }
+      else
+      {
+        minuteIsValid=false;
+      }
+      ///////////////////////////////Seconds Validation//////////////////////////
+    /*  if(document.getElementById("secondsChoice").value.match(numbers))
+      {
+        secondIsValid=true;
+        alert("bueno");
+      }
+      else
+      {
+        secondIsValid=false;
+        alert("malo");
+      }
+      //////////////////////////////mili Validation////////////////////////////
+      if(document.getElementById("miliChoice").value.match(numbers))
+      {
+        miliIsValid=true;
+        alert("bueno");
+      }
+      else
+      {
+        miliIsValid=false;
+        alert("malo");
+      }
+      ///////////////////////////////End Of Validaitons////////////////////////
+*/
+
+      if(monthIsValid!=false && dayIsValid!=false && hourIsValid!=false &&
+        minuteIsValid!=false){
+
+          var currentMonth=document.getElementById("monthChoice").value;
+          var currentDay=document.getElementById("dayChoice").value;
+          var currentHour=document.getElementById("hoursChoice").value;
+          var currentMinutes=document.getElementById("minutesChoice").value;
+          //var currentSeconds=document.getElementById("secondsChoice").value;
+        //  var currentMili=document.getElementById("miliChoice").value;
+          var currentYear=2015;
+
+      countdown();
+      setInterval(countdown, 1000);
+      function countdown () {
+        var now = moment();
+
+
+      var  day=new Date(currentYear,currentMonth,currentDay,currentHour,currentMinutes,1,1);
+      //  day= new Date(document.getElementById("dateInput").value);
+      var  then = moment(day);
+
+
+
+        // update the duration in ms
+        ms = then.diff(now, 'milliseconds', true);
+
+        months = Math.floor(moment.duration(ms).asMonths());
+
+
+      then = then.subtract(months, 'months');
+      months-=1;
+
+
+        // update the duration in ms
+        //console.log("miliseconds before diff "+ms);
+
+
+        ms = then.diff(now, 'milliseconds', true);
+      //  console.log("ms value after diff: "+ms+"milliseconds");
+        days = Math.floor(moment.duration(ms).asDays());
+
+      //  console.log("After the asDays thingy: "+days);
+
+
+        then = then.subtract(days, 'days');
+
+        // update the duration in ms
+        ms = then.diff(now, 'milliseconds', true);
+        hours = Math.floor(moment.duration(ms).asHours());
+
+
+        then = then.subtract(hours, 'hours');
+
+        // update the duration in ms
+        ms = then.diff(now, 'milliseconds', true);
+        minutes = Math.floor(moment.duration(ms).asMinutes());
+
+        then = then.subtract(minutes, 'minutes');
+
+
+        // update the duration in ms
+        ms = then.diff(now, 'milliseconds', true);
+        seconds = Math.floor(moment.duration(ms).asSeconds());
+        then = then.subtract(seconds, 'seconds');
+
+
+        // concatonate the variables
+      //  console.log("Chosen day is: "+currentDay);
+      //  console.log("Current day is: "+moment().date());
+      //  console.log(document.getElementById("dayChoice").value);
+
+
+
+        if(months>=1){
+          
+
+        diff = '<span class="num">' + months + '</span> </br>months<br><span class="num">';
+        $('#block1').html(diff);
+
+        diff='</span><span class="num">' + days +  '</span></br> days<br><span class="num">';
+        $('#block2').html(diff);
+
+        diff='</span><span class="num">' + hours + '</span></br> hours<br><span class="num">';
+        $('#block3').html(diff);
+
+
+      }else
+
+        if(months<1 && days>=1) {
+
+
+          diff = '<span class="num">' + days + '</span> </br>days<br><span class="num">';
+          $('#block1').html(diff);
+
+          diff= '<span class="num">' + hours + '</span></br> hours<br><span class="num">';
+          $('#block2').html(diff);
+
+          diff= '</span><span class="num">' + minutes + '</span></br> minutes<br><span class="num">';
+          $('#block3').html(diff);
+
+        }else
+
+        if(days<1 && hours>=1){
+          diff = '<span class="num">' + hours + '</span></br> hours<br><span class="num">';
+          $('#block1').html(diff);
+
+          diff= '<span class="num">' + minutes + '</span></br> minutes<br><span class="num">';
+          $('#block2').html(diff);
+
+          diff= '</span><span class="num">' + seconds + '</span></br> seconds<br><span class="num">';
+          $('#block3').html(diff);
+        }else
+
+        if(hours<1 && minutes>=1){
+          diff = '<span class="num">' + minutes + '</span></br> minutes<br><span class="num">';
+          $('#block1').html(diff);
+
+          diff= '<span class="num">' + seconds + '</span></br> seconds<br><span class="num">';
+          $('#block2').html(diff);
+
+          diff= '</span><span class="num">' + ms + '</span></br> miliseconds<br><span class="num">';
+          $('#block3').html(diff);
+        }else
+
+
+        if(minutes<1 && seconds<1 && ms<1){
+          alert("End of Countdown!");
+            $('#block1').html("0");
+            $('#block2').html("0");
+            $('#block3').html("0");
+        }
+
+
+
+      }
+    }
+    });
+
+    </script>
+
+  </br></br>
+
+
+  <div class="container" id="ImageScrollPlugin">
+    <div class="jumbotron">
+      <h1>Image Scroll Plugin<h1>
+        <h2>Use the arrows to scroll between images!</h2>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row height-fix">
+
+    <div class="col-md-6">
+
+      <div class="row">
+
+        <div class="col-md-12 up arrow"><button id="upArrow" class="btn btn-defaultarrow-button">
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &bigwedge;&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+          </button></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <img src="./images/wobi.jpg" class="scroller-image-mini gray-background"></img>
+        </div>
+        <div id="item0" class="col-md-10 gray-background scroller-item scroller-item-left current-item">
+          <p>World Business Forum 2012</p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <img src="./images/backstage1.jpg" class="scroller-image-mini gray-background"></img>
+        </div>
+        <div id="item1" class="col-md-10 gray-background scroller-item scroller-item-left">
+          <p>Backstage Video 1</p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <img src="./images/interview1.jpg" class="scroller-image-mini gray-background"></img>
+        </div>
+        <div id="item2" class="col-md-10 gray-background scroller-item scroller-item-left">
+          <p>Backstage Video 2</p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <img src="./images/interview2.jpg" class="scroller-image-mini gray-background"></img>
+        </div>
+        <div id="item3" class="col-md-10 gray-background scroller-item scroller-item-left">
+          <p>Laureate panels and interviews - Day 1</p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 up arrow"><button id="downArrow" class="btn btn-defaultarrow-button">
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &bigvee;&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+          </button></div>
+      </div>
+    </div>
+
+    <div class="col-md-6 no-padding">
+      <img id="fullImage" src="./images/wobi.jpg" class="scroller-image"></img>
+    </div>
+
+  </div>
+
+</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+
+</div>
+
+<script>
+    $('#upArrow').prop('disabled', true);
+  var counter=0;
+  var down=true;
+  var up=true;
+
+  $("#upArrow").click(function(){
+    up=true;
+
+        if(down!=false){
+      switch(counter){
+        case 1://change item 0
+      $('#item0').addClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+      counter=1;
+
+      $('#downArrow').prop('disabled', false);
+      $('#upArrow').prop('disabled', true);
+      //$('#fullImage').attr('src','./images/wobi.jpg');
+        animation('./images/wobi.jpg');
+
+        break;
+        case 2:
+        $('#item0').removeClass("current-item");
+      $('#item1').addClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+
+       counter=2;
+
+       $('#downArrow').prop('disabled', false);
+      //  $('#fullImage').attr('src','./images/backstage1.jpg');
+        animation('./images/backstage1.jpg');
+
+        break;
+        case 3:
+        $('#item0').removeClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').addClass("current-item");
+      $('#item3').removeClass("current-item");
+
+       counter=3;
+
+       $('#downArrow').prop('disabled', false);
+       //$('#fullImage').attr('src','./images/interview1.jpg');
+         animation('./images/interview1.jpg');
+
+        break;
+
+case 0:
+        $('#item0').addClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+
+      counter=0;
+
+      //$('#fullImage').attr('src','./images/wobi.jpg');
+        animation('./images/wobi.jpg');
+      $('#downArrow').prop('disabled', false);
+
+        break;
+
+        default:
+
+        break;
+
+      };
+    };
+
+
+    counter-=1;
+
+
+    console.log(counter);
+/*
+    switch (counter) {
+
+      case 1://change item0
+      $('#item0').addClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+      counter-=1;
+      break;
+
+      case 2://change item2
+      $('#item0').removeClass("current-item");
+      $('#item1').addClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+      break;
+      case 3://change item2
+      $('#item0').removeClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').addClass("current-item");
+      $('#item3').removeClass("current-item");
+      break;
+      default://change item0
+      counter+=1;
+        break;
+
+    };//end switch
+*/
+  });
+
+
+
+    $("#downArrow").click(function(){
+      down=true;
+      counter+=1;
+
+      if(up!=false){
+      switch(counter){
+        case 1://change item 0
+        $('#item0').addClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+      counter=1;
+
+      $('#upArrow').prop('disabled', false);
+
+      // $('#fullImage').attr('src','./images/wobi.jpg');
+
+
+       animation("./images/backstage1.jpg");
+       fadeClass(1);
+
+
+        break;
+        case 2:
+        $('#item0').removeClass("current-item");
+      $('#item1').addClass("current-item");
+      $('#item2').removeClass("current-item");
+      $('#item3').removeClass("current-item");
+       counter=2;
+
+       $('#upArrow').prop('disabled', false);
+      //  $('#fullImage').attr('src','./images/backstage1.jpg');
+
+        animation('./images/interview1.jpg');
+
+        break;
+        case 3:
+        $('#item0').removeClass("current-item");
+      $('#item1').removeClass("current-item");
+      $('#item2').addClass("current-item");
+      $('#item3').removeClass("current-item");
+       counter=3;
+       $('#upArrow').prop('disabled', false);
+      //  $('#fullImage').attr('src','./images/interview1.jpg');
+        animation('./images/interview2.jpg');
+
+        break;
+      };
+    };
+
+      console.log(counter);
+
+      switch (counter) {
+        case 1://change item1
+        $('#item0').removeClass("current-item");
+        $('#item1').addClass("current-item");
+        $('#item2').removeClass("current-item");
+        $('#item3').removeClass("current-item");
+
+         $('#upArrow').prop('disabled', false);
+         //$('#fullImage').attr('src','./images/backstage1.jpg');
+
+        break;
+
+        case 2://change item2
+        $('#item0').removeClass("current-item");
+        $('#item1').removeClass("current-item");
+        $('#item2').addClass("current-item");
+        $('#item3').removeClass("current-item");
+
+        $('#upArrow').prop('disabled', false);
+         //$('#fullImage').attr('src','./images/interview1.jpg');
+
+        break;
+        case 3://change item3
+        $('#item0').removeClass("current-item");
+        $('#item1').removeClass("current-item");
+        $('#item2').removeClass("current-item");
+        $('#item3').addClass("current-item");
+        counter+=1;
+        $('#downArrow').prop('disabled', true);
+          $('#upArrow').prop('disabled', false);
+
+        // $('#fullImage').attr('src','./images/interview2.jpg');
+
+        break;
+
+        default://change item4
+       counter-=1;
+              break;
+      };
+
+  });
+
+/*
+  function animation(newSrc) {
+    $( "#fullImage" ).fadeIn( 3000,newSrc);
+    var imgSource = $("#fullImage").attr("src");
+    $("#fullImage").fadeOut(2000, function() {
+            $("#fullImage").attr('src',$imgSource);
+        })
+        .fadeIn(400);
+};
+*/
+
+function animation(newSrc){
+  $("#fullImage").fadeOut(350,function(){
+    $("#fullImage").load(function () { //avoiding blinking, wait until loaded
+        $("#fullImage").fadeIn(350);
+    });
+    $("#fullImage").attr("src",newSrc);
+});
+}
+
+// $( "#effect" ).toggleClass( "newClass", 1000 );
+function fadeClass(itemNumber){
+  switch (itemNumber) {
+    case 0:
+      $("#item0").addClass("current-item",1000);
+      $("#item1").removeClass("current-item",1000);
+      $("#item2").removeClass("current-item",1000);
+      $("#item3").removeClass("current-item",1000);
+      break;
+
+      case 1:
+       $("#item0").removeClass("current-item",1000);
+      $("#item1").toggleClass("current-item",5000);
+      $("#item2").removeClass("current-item",1000);
+      $("#item3").removeClass("current-item",1000);
+      break;
+
+      case 2:
+       $("#item0").removeClass("current-item",1000);
+      $("#item1").removeClass("current-item",1000);
+      $("#item2").addClass("current-item",1000);
+      $("#item3").removeClass("current-item",1000);
+      break;
+
+      case 3:
+       $("#item0").removeClass("current-item",1000);
+      $("#item1").removeClass("current-item",1000);
+      $("#item2").removeClass("current-item",1000);
+      $("#item3").addClass("current-item",1000);
+      break;
+
+    default:
+
+  }
+}
+
+/*$("#downArrow").click(function(e) {
+    e.preventDefault();
+    $imgURL = $(this).attr("href");
+    $(".boat_listing .mainGallery")
+        .fadeOut(400, function() {
+            $(".boat_listing .mainGallery").attr('src',$imgURL);
+        })
+        .fadeIn(400);
+});
+*/
+
+
+
+</script>
+
+  </body>
+
+</html>

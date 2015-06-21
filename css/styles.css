@@ -70,3 +70,82 @@
 .hr-2{
   border:1px solid gray;
 }
+
+.menuBar{
+  position:fixed;
+  width:100%;
+}
+
+.timer-background{
+    position: relative;
+    background-color: #F7F7F7;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #404040;
+
+    box-shadow: 4px 4px 9px -2px #99A3AD, 0px 0px 40px #EEEEEE;
+
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    border-left-width:20px;
+}
+
+.timer-component{
+  background-color: #F7F7F7;
+  margin-top: 130px;
+  text-align: center;
+  font-size: 250%;
+}
+
+.up-arrow{
+  background-color:#F7F7F7;
+  text-align:center;
+}
+
+.gray-background{
+  background-color:#F7F7F7;
+}
+
+.scroller-image{
+  max-width: 77%;
+  max-height: 50%;
+}
+
+.scroller-image-mini{
+  max-width: 103%;
+  max-height: auto;
+}
+
+.scroller-item{
+  border-bottom: 1px solid #BDBDBD;
+  font-size: 140%;
+  color:black;
+}
+
+.scroller-item-left{
+  max-height: 100%;
+}
+
+.no-padding{
+  padding-left: 0px;
+}
+
+.arrow-button{
+  max-width: 100%;
+}
+
+.current-item{
+  color:#DF7401;
+  background-color: white;
+}
+
+.height-fix{
+  max-height: 260%;
+}
+
+#upArrow,#downArrow{
+  font-size: 160%;
+}
